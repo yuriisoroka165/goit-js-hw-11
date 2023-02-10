@@ -3,7 +3,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 import Notiflix from 'notiflix';
 import ConnectToImageService from './js/api';
 
-refs = {
+const refs = {
     gallery: document.querySelector('.gallery'),
     searchForm: document.querySelector('.search-form'),
     search: document.querySelector('.search-button'),
