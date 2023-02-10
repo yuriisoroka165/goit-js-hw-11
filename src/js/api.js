@@ -13,17 +13,24 @@ export default class ConnectToImageService {
     }
 
     async fetchItems() {
-        // console.log('Before query', this.page);
+        // console.log('Before query (api.js)', this.page);
         const queryUrl = `https://pixabay.com/api/?key=${this.apiKey}&q=${this.searchQuery}&image_type=${this.image_type}&orientation=${this.orientation}&safesearch=${this.safesearch}&page=${this.page}&per_page=${this.per_page}`;
-        await axios.get(queryUrl)
-            .then(response => response.data.hits)
-            .then(hits => {
-                console.log(hits);
-                this.page +=1;
-                // console.log('After query', this.page);
+        return await axios.get(queryUrl)
+            .then(response => {
+                // console.log('From (api.js)', response.data);
+                this.incrementPage();
+                // console.log('After query (api.js)', this.page);
+                return response.data;
             });
-        // console.log(response.data.total);
     }   
+
+    resetPage() {
+        this.page = 1;
+    }
+
+    incrementPage() {
+        this.page += 1;
+    }
 
     get query() {
         return this.searchQuery;

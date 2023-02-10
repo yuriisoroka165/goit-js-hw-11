@@ -1,4 +1,4 @@
-// import Notiflix from 'notiflix';
+import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import ConnectToImageService from './js/api';
 
@@ -6,20 +6,37 @@ refs = {
     gallery: document.querySelector('.gallery'),
     searchForm: document.querySelector('.search-form'),
     search: document.querySelector('.search-button'),
+    loadMoreButton: document.querySelector('.load-more'),
 }
 
 const newConnection = new ConnectToImageService();
-// console.log(newConnection);
 
 refs.searchForm.addEventListener('submit', onSearch);
+refs.loadMoreButton.addEventListener('click', onLoadMore);
 
 function onSearch(event) {
     event.preventDefault();
 
     newConnection.query = event.currentTarget.elements.searchQuery.value;
-    newConnection.fetchItems();
+    newConnection.resetPage();
+    newConnection.fetchItems()
+        .then(items => {
+            const totalItems = items.total;
+            if (totalItems === 0) {
+                Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
+            } else {
+                console.log('From (index.js)', items.hits);
+            }
+            console.log('From (index.js)', totalItems);
+        });
     // refs.gallery.insertAdjacentHTML('beforeend', galleryItemsMArkup(newConnection.fetchItems));
-        
+}
+
+function onLoadMore(event) {
+    newConnection.fetchItems()
+        .then(items => {
+            console.log('From (index.js)', items.hits);
+        });
 }
 
 function galleryItemsMArkup(fetchedItems) {
