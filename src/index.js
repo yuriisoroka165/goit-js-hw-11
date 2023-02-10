@@ -52,7 +52,7 @@ function onLoadMore(event) {
             initGallery.refresh();
             if (items.hits.length < 40) {
                 loadMoreButtonDisable();
-                Notiflix.Report.warning('We\'re sorry, but you\'ve reached the end of search results.');
+                Notiflix.Notify.warning('We\'re sorry, but you\'ve reached the end of search results.');
             }
         });
 }
