@@ -38,7 +38,6 @@ function onSearch(event) {
             } else if (totalHits > 0){
                 Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
                 refs.gallery.insertAdjacentHTML('beforeend', galleryItemsMArkup(items.hits));                
-                // new SimpleLightbox('.gallery a', {});
                 initGallery.refresh();
                 loadMoreButtonEnable();
             }
@@ -50,7 +49,7 @@ function onLoadMore(event) {
         .then(items => {
             refs.gallery.insertAdjacentHTML('beforeend', galleryItemsMArkup(items.hits));
             initGallery.refresh();
-            if (items.hits.length < 40) {
+            if (items.hits.length < newConnection.per_page) {
                 loadMoreButtonDisable();
                 Notiflix.Notify.warning('We\'re sorry, but you\'ve reached the end of search results.');
             }

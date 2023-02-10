@@ -12,13 +12,10 @@ export default class ConnectToImageService {
     }
 
     async fetchItems() {
-        // console.log('Before query (api.js)', this.page);
         const queryUrl = `https://pixabay.com/api/?key=${this.apiKey}&q=${this.searchQuery}&image_type=${this.image_type}&orientation=${this.orientation}&safesearch=${this.safesearch}&page=${this.page}&per_page=${this.per_page}`;
         return await axios.get(queryUrl)
             .then(response => {
-                // console.log('From (api.js)', response.data);
                 this.incrementPage();
-                // console.log('After query (api.js)', this.page);
                 return response.data;
             });
     }   
